@@ -9,10 +9,21 @@
 <body>
 	<h1>Dark Sky Weather API Query & Store</h1>
 	<p>This is a simple app to request and store weather data from Dark Sky's API.</p>
+	<div class="zip-form">
+		<p>The fields below will automatically populate with coordinates supplied by your browser. Alternatively, you can enter coordinates of your choosing. After clicking submit, weather data for that location will be returned. </p>
+		<form class="form" action="/" method="post">
+			<input type="text" name="lat" placeholder="Latitude">
+			<input type="text" name="long" placeholder="Longitude">
+			<button type="submit">Submit</button>
+		</form>
 
-	<form class="form" action="/" method="post">
-		<input type="text" name="zip" placeholder="ZIP code">
-		<button type="submit">Submit</button>
-	</form>
+	</div>
+	<script type="text/javascript">
+			navigator.geolocation.getCurrentPosition(function(position) {
+				document.getElementsByName("lat")[0].value = position.coords.latitude;
+				document.getElementsByName("long")[0].value = position.coords.longitude;
+
+			});
+	</script>
 </body>
 </html>
