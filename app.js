@@ -15,12 +15,12 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res) {
-	res.sendFile(__dirname + "/index.html");
+	res.render("index");
 });
 
 app.post("/", function(req, res) {
 	const latitude = req.body.lat;
-	const longitude = req. body.long;
+	const longitude = req.body.long;
 	const url = "https://api.darksky.net/forecast/" + process.env.DARK_SKY_SECRET + "/" + latitude + "," + longitude;
 
 	options = {
@@ -28,7 +28,12 @@ app.post("/", function(req, res) {
 	};
 
 	request(options, function(error, response, body) {
-		res.send(JSON.parse(body));
+		const parsedBody = JSON.parse(body);
+		console.log(parsedBody.currently);
+
+		res.render("result", {
+			data: parsedBody.currently
+		});
 	});
 });
 
